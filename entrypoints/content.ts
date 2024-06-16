@@ -1,5 +1,5 @@
 export default defineContentScript({
-  matches: ['*://*.mat.umk.pl/*'],
+  matches: ['*://www.mat.umk.pl/*'],
   main() {
     console.log('Jesteś na stronie UMK!');
   },
