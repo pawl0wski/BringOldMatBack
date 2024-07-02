@@ -23,11 +23,20 @@ export async function scrapNews(): Promise<News[]> {
   return news;
 }
 
+export async function fillNewsContent(news: News): Promise<News> {
+    const data = await fetch(`https://www.mat.umk.pl/wiadomosci/?id=${news.id}`)
+    const $ = cheerio.load(await data.text());
+
+    news.content = $("article").html() ?? "";
+
+    return news;
+}
+
 function createNewsFromSectionTag(newsElement: Cheerio<CheerioElement>): News {
   return {
     id: parseInt(newsElement.find("p.wiecej a").attr("href")?.slice(4) ?? ""),
     title: newsElement.find("h3").text(),
-    description: newsElement.find("p:first-of-type").text(),
+    description: newsElement.find("p:first-of-type").html() ?? "",
     date: new Date(newsElement.find("time").text()),
     photoUrl: newsElement.find("img").attr("src") ?? ""
   };
