@@ -1,6 +1,7 @@
 import "./App.css";
 
 import { active } from "~/utils/storage";
+import {useEffect, useState} from "react";
 
 function App() {
   const [isChecked, setIsChecked] = useState(false);
