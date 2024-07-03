@@ -14,13 +14,9 @@ export async function scrapNews(): Promise<News[]> {
   const data = await fetch("https://www.mat.umk.pl/wiadomosci/", { method: "GET" });
   const $ = cheerio.load(await data.text());
 
-  const news: News[] = [];
-
-  $("section.wiadomosc").each((_, element) => {
-    news.push(createNewsFromSectionTag($(element)));
-  });
-
-  return news;
+  return $("section.wiadomosc").map((_, element) => {
+    return createNewsFromSectionTag($(element));
+  }).toArray();
 }
 
 export async function fillNewsContent(news: News): Promise<News> {
