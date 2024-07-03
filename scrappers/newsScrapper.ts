@@ -31,9 +31,9 @@ export async function fillNewsContent(news: News): Promise<News> {
 function createNewsFromSectionTag(newsElement: Cheerio<CheerioElement>): News {
   return {
     id: parseInt(newsElement.find("p.wiecej a").attr("href")?.slice(4) ?? ""),
-    title: newsElement.find("h3").text(),
-    contentShort: newsElement.find("p:first-of-type").html() ?? "",
-    date: new Date(newsElement.find("time").text()),
-    photoUrl: newsElement.find("img").attr("src") ?? ""
+    title: newsElement.children("h3").text(),
+    contentShort: newsElement.children("p").html() ?? "",
+    date: new Date(newsElement.children("time").text()),
+    photoUrl: newsElement.children("img").attr("src") ?? ""
   };
 }
