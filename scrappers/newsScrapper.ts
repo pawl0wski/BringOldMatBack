@@ -4,7 +4,7 @@ import { Element as CheerioElement, Cheerio, SelectorType } from "cheerio";
 export interface News {
   id: number
   title: string,
-  description: string,
+  contentShort: string,
   content?: string,
   photoUrl: string,
   date: Date,
@@ -32,7 +32,7 @@ function createNewsFromSectionTag(newsElement: Cheerio<CheerioElement>): News {
   return {
     id: parseInt(newsElement.find("p.wiecej a").attr("href")?.slice(4) ?? ""),
     title: newsElement.find("h3").text(),
-    description: newsElement.find("p:first-of-type").html() ?? "",
+    contentShort: newsElement.find("p:first-of-type").html() ?? "",
     date: new Date(newsElement.find("time").text()),
     photoUrl: newsElement.find("img").attr("src") ?? ""
   };
